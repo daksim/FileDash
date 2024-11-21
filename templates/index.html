@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileDash - File Browser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .current-path {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #6c757d;
+        }
+        .file-list {
+            list-style: none;
+            padding: 0;
+        }
+        .file-list li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        .file-list li img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        .file-list a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+        .file-list a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #868e96;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FileDash - File Browser</h1>
+    </header>
+    <div class="container">
+        <p class="current-path">Current Path: {{ current_path.replace(base_dir, '') or '/' }}</p>
+        <ul class="file-list">
+            {% for file in files %}
+                <li>
+                    {% if file.is_dir %}
+                        <img src="https://img.icons8.com/material-rounded/24/007BFF/folder-invoices.png" alt="Folder">
+                        <a href="/?path={{ current_path }}/{{ file.name }}">{{ file.name }}/</a>
+                    {% else %}
+                        <img src="https://img.icons8.com/material-rounded/24/007BFF/file.png" alt="File">
+                        <a href="/download?path={{ current_path }}/{{ file.name }}">{{ file.name }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <footer>
+        <p>&copy; 2024 FileDash.</p>
+    </footer>
+</body>
+</html>
